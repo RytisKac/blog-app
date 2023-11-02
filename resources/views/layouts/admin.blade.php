@@ -21,14 +21,9 @@
     <!-- Page Heading -->
     @if (isset($header))
         <header class="bg-white shadow  w-full content-center">
-            <div class="flex mx-auto max-w-7xl items-center">
-                <div class=" py-6 px-4 sm:px-6 lg:px-8">
+            <div class="mx-auto max-w-7xl">
+                <div class="flex items-center gap-2 py-6 px-4 sm:px-6 lg:px-8">
                     {{ $header }}
-                </div>
-                <div>
-                    <x-nav-link href="{{route('admin.post.create')}}">
-                        Create Post
-                    </x-nav-link>
                 </div>
             </div>
         </header>
