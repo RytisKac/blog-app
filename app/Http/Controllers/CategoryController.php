@@ -7,18 +7,15 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class PostController extends Controller
+class CategoryController extends Controller
 {
     //
-    public function index(): View
+    public function show(Category $category): View
     {
-        $posts = Post::latest()->paginate(6);
-        $categories = Category::all();
+        $posts = $category->posts()->latest()->paginate(6);
 
-        return view('home', [
+        return view('category.show', [
             'posts' => $posts
         ]);
     }
-
-
 }

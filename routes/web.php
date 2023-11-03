@@ -1,5 +1,7 @@
 <?php
 
+use \App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use \App\Http\Controllers\Admin\PostController as AdminPostController;
 use \App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
@@ -16,9 +18,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [PostController::class, 'index'])->name('home');
+Route::get('/category/{category:slug}', [CategoryController::class, 'show'])->name('category.show');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('/dashboard', [AdminPostController::class, 'index'])->middleware(['verified'])->name('admin.dashboard');

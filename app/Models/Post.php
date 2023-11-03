@@ -22,4 +22,9 @@ class Post extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+   public function categoryFilter($category)
+   {
+       return $this->where('category_id', $category->id);
+   }
 }
