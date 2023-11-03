@@ -13,10 +13,16 @@ class PostController extends Controller
     public function index(): View
     {
         $posts = Post::latest()->paginate(6);
-        $categories = Category::all();
 
         return view('home', [
             'posts' => $posts
+        ]);
+    }
+
+    public function show(Post $post): View
+    {
+        return view('post.show', [
+            'post' => $post
         ]);
     }
 

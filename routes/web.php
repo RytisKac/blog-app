@@ -20,14 +20,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PostController::class, 'index'])->name('home');
 Route::get('/category/{category:slug}', [CategoryController::class, 'show'])->name('category.show');
+Route::get('/post/{post:slug}', [PostController::class, 'show'])->name('post.show');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('/dashboard', [AdminPostController::class, 'index'])->middleware(['verified'])->name('admin.dashboard');
 
     Route::group(['prefix' => 'post'], function () {
-        Route::get('create', function () {
-            return view('admin.post.create');
-        })->name('admin.post.create');
+        Route::get('create', [AdminPostController::class, 'create'])->name('admin.post.create');
         Route::post('store', [AdminPostController::class, 'store'])->name('admin.post.store');
         Route::get('edit/{post:slug}', [AdminPostController::class, 'edit'])->name('admin.post.edit');
         Route::put('update/{post:slug}', [AdminPostController::class, 'update'])->name('admin.post.update');

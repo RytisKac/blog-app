@@ -15,7 +15,8 @@ class CategoryController extends Controller
         $posts = $category->posts()->latest()->paginate(6);
 
         return view('category.show', [
-            'posts' => $posts
+            'posts' => $posts,
+            'category' => $category
         ]);
     }
 }
