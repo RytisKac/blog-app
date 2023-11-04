@@ -19,4 +19,14 @@ class CategoryController extends Controller
             'category' => $category
         ]);
     }
+
+    public function uncategorized(): View
+    {
+        $posts = Post::doesntHave('category')->latest()->paginate(6);
+
+        return view('category.show', [
+            'posts' => $posts,
+            'category' => new Category(['name' => 'Uncategorized'])
+        ]);
+    }
 }

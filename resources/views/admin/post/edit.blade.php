@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <form method="POST" action="{{route('admin.post.update', ['post' => $post])}}" enctype="multipart/form-data" class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+    <form method="POST" action="{{route('admin.post.update', ['post' => $post])}}" enctype="multipart/form-data" class="max-w-7xl mx-auto sm:px-6 px-4 space-y-6">
         @csrf
         @method('PUT')
         <div>
@@ -25,7 +25,7 @@
         </div>
         <div>
             <x-input-label for="content" :value="__('Content')" />
-            <textarea name="content" rows="4" required  class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Write your content here...">{{$post->content}}</textarea>
+            <x-trix-field name="content" id="content" required :value="old('content') ?? $post->content" />
             <x-input-error :messages="$errors->get('content')" class="mt-2" />
         </div>
         <div>
@@ -34,9 +34,22 @@
             <x-input-error :messages="$errors->get('image')" class="mt-2" />
         </div>
         <div>
+            <img src="{{asset($post->image)}}" alt="" width="150px">
+        </div>
+        <div>
             <x-input-label for="tags" :value="__('Tags')" />
             <x-text-input name="tags" class="block mt-1 w-full" type="text" name="tags" :value="old('tags') ?? $post->tags" required  autocomplete="tags" placeholder="Tags (separate by comma)"/>
             <x-input-error :messages="$errors->get('tags')" class="mt-2" />
+        </div>
+        <div>
+            <x-input-label for="category" :value="__('Category')" />
+            <select name="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                <option value="">Uncatorized</option>
+                @foreach ($categories as $category)
+                    <option value="{{$category->id}}" @selected(old('category') ?? $post->category_id == $category->id)>{{$category->name}}</option>
+                @endforeach
+            </select>
+            <x-input-error :messages="$errors->get('category')" class="mt-2" />
         </div>
         <div>
             <x-primary-button>

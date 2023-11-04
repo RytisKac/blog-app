@@ -29,7 +29,9 @@
                     {{$category->slug}}
                 </td>
                 <td class="px-6 py-4">
-                    0
+                    <a href="{{route('admin.category.show', ['category' => $category])}}" class="font-medium text-blue-600 hover:underline">
+                        {{$category->posts->count()}}
+                    </a>
                 </td>
                 <td class="px-6 py-4">
                     <a href="{{route('admin.category.edit', ['category' => $category])}}" class="font-medium text-blue-600 hover:underline">Edit</a>
@@ -41,7 +43,7 @@
                         <button class="font-medium text-blue-600 hover:underline">Delete</button>
                     </form>
                 </td>
-            </tr> 
+            </tr>
             @empty
             <tr class="bg-white border-b">
                 <td class="px-6 py-4" colspan="4">

@@ -19,6 +19,12 @@ class CategoryController extends Controller
         return view('admin.category.index', ['categories' => $categories]);
     }
 
+    public function show(Category $category): View
+    {
+        $posts = $category->posts()->paginate(10);
+        return view('admin.category.show', ['category' => $category, 'posts' => $posts]);
+    }
+
     public function store(Request $request, Category $category): RedirectResponse
     {
         $request->validate([

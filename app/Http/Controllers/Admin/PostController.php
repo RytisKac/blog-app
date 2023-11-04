@@ -17,7 +17,7 @@ class PostController extends Controller
             'posts' => Post::query()->paginate(10)
         ]);
     }
-    
+
     public function create(): View
     {
         $categories = Category::all();
@@ -40,12 +40,12 @@ class PostController extends Controller
         ]);
 
         $imagePath = $request->file('image')->store('images');
-        
+
         Post::query()->create([
             'title' => $request->title,
             'slug' => $request->slug,
             'excerpt' => $request->excerpt,
-            'content' => $request->content,
+            'content' => $request['content'],
             'image' => $imagePath,
             'tags' => $request->tags,
             'category_id' => $request->category ?? null
@@ -68,19 +68,23 @@ class PostController extends Controller
             'slug' => 'required|unique:posts,slug,' . $post->id,
             'excerpt' => 'required',
             'content' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'tags' => 'required',
+            'category_id' => 'nullable|exists:categories,id'
         ]);
 
-        $imagePath = $request->file('image')->store('images');
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images');
+        }
 
         $post->update([
             'title' => $request->title,
             'slug' => $request->slug,
             'excerpt' => $request->excerpt,
-            'content' => $request->content,
-            'image' => $imagePath,
-            'tags' => $request->tags
+            'content' => $request['content'],
+            'image' => $imagePath ?? $post->image,
+            'tags' => $request->tags,
+            'category_id' => $request->category_id ?? null
         ]);
 
         return redirect()->route('admin.dashboard');

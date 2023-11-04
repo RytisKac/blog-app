@@ -12,10 +12,15 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     @foreach($categories as $category)
-                        <x-nav-link :href="route('category.show', $category)" :active="request()->routeIs('category.show', $category)">
-                            {{ $category->name }}
-                        </x-nav-link>
+                        @if($category->posts()->count() > 0)
+                            <x-nav-link :href="route('category.show', $category)" :active="request()->routeIs('category.show', $category)">
+                                {{ $category->name }}
+                            </x-nav-link>
+                        @endif
                     @endforeach
+                        <x-nav-link :href="route('category.show.uncategorized')" :active="request()->routeIs('category.show.uncategorized')">
+                            Uncategorized
+                        </x-nav-link>
                 </div>
 
             <!-- Hamburger -->
@@ -33,19 +38,21 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
             @foreach($categories as $category)
-                <x-responsive-nav-link :href="route('category.show', $category)" :active="request()->routeIs('category.show', $category)">
-                    {{ $category->name }}
-                </x-responsive-nav-link>
+                @if($category->posts()->count() > 0)
+                    <x-responsive-nav-link :href="route('category.show', $category)" :active="request()->routeIs('category.show', $category)">
+                        {{ $category->name }}
+                    </x-responsive-nav-link>
+                @endif
             @endforeach
+            <x-responsive-nav-link :href="route('category.show.uncategorized')" :active="request()->routeIs('category.show.uncategorized')">
+                Uncategorized
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
-            
+
         </div>
     </div>
 </nav>

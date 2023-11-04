@@ -24,7 +24,7 @@
         </div>
         <div>
             <x-input-label for="content" :value="__('Content')" />
-            <textarea name="content" rows="4" required value="{{old('content')}}" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Write your content here..."></textarea>
+            <x-trix-field name="content" id="content" required :value="old('content')" />
             <x-input-error :messages="$errors->get('content')" class="mt-2" />
         </div>
         <div>

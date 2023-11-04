@@ -124,6 +124,9 @@
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php83" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring" />
       <path value="$PROJECT_DIR$/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/vendor/tonysm/globalid-laravel" />
+      <path value="$PROJECT_DIR$/vendor/tonysm/rich-text-laravel" />
+      <path value="$PROJECT_DIR$/vendor/spatie/laravel-package-tools" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
