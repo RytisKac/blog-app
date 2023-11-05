@@ -7,13 +7,14 @@ use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class PostController extends Controller
 {
     public function index(): View
     {
-        return view('admin.dashboard', [
+        return view('admin.index', [
             'posts' => Post::query()->paginate(10)
         ]);
     }
@@ -51,7 +52,7 @@ class PostController extends Controller
             'category_id' => $request->category ?? null
         ]);
 
-        return redirect()->route('admin.dashboard');
+        return redirect()->route('admin.index');
     }
 
     public function edit(Post $post): View
@@ -84,16 +85,21 @@ class PostController extends Controller
             'content' => $request['content'],
             'image' => $imagePath ?? $post->image,
             'tags' => $request->tags,
-            'category_id' => $request->category_id ?? null
+            'category_id' => $request->category ?? null
         ]);
 
-        return redirect()->route('admin.dashboard');
+        return redirect()->route('admin.index');
     }
 
     public function destroy(Post $post): RedirectResponse
     {
+        //check if image exists in images storage if it does delete it
+        if(Storage::exists($post->image)) {
+            Storage::delete($post->image);
+        }
+
         $post->delete();
 
-        return redirect()->route('admin.dashboard');
+        return redirect()->route('admin.index');
     }
 }

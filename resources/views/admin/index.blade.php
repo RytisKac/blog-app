@@ -16,7 +16,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 flex gap-4 flex-wrap">
                     @forelse($posts as $post)
-                        <x-admin-post-card :post="$post"/>
+                        <x-admin.post-card :post="$post"/>
                     @empty
                         <p>No posts yet</p>
                     @endforelse
